@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Alumni Login</title>
+<script>
+    function validate() {
+            var a = document.form.username.value;
+            var p = document.form.password.value;
+           
+
+            if (a === "") {
+                alert("Please enter your name");
+                return false;
+            }
+            
+            if (!/^[0-9]/.test(a)) {
+                alert("Username must start with an digit");
+                return false;
+            }
+            
+            if (a.length < 10) {
+                alert("Username must contain at 10 digit");
+                return false;
+            }
+           
+
+            if (p === "") {
+                alert("Please enter your password");
+                return false;
+            }
+
+            if ((p.length < 5) || (p.length > 15)) {
+                alert("Password must be 5 to 15 characters only");
+                return false;
+            }
+
+            if (!/[A-Z]/.test(p) || !/[a-z]/.test(p) || !/\d/.test(p)) {
+                alert("Incorrect Password!!");
+                return false;
+            }
+
+            if (/[;.:]/.test(p)) {
+                alert("Password cannot contain the symbols ; . :");
+                return false;
+            }
+
+            return true; // Allow form submission if all checks pass
+    }
+</script>
+<style>
+  .header
+{
+    background-color:#0bc2ef;
+    padding: 5px;
+    padding-bottom:-30px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:-45px;
+    height:90px;
+}
+.logo
+{
+    display:flex;
+    align-items: center;
+    height:80px;
+}
+.logo img
+{
+    margin-left:20px;
+    height:80px;
+    width:80px;
+}
+
+nav{
+    color:white;
+    text-align: right;
+    padding:15px;
+}
+nav a{
+    padding:15px;
+    margin-top:10 px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    color:white;
+    font-size: 20px;
+}
+nav input
+{
+    margin-top:20px;
+    text-size-adjust:inherit;
+
+}
+.buttoncol input
+{
+    background-color:darkgray;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-right: 10px;
+}
+.buttoncol nav
+{
+    padding-top: 40px;
+}
+.buttoncol input
+{
+    margin-top: 35px;
+    
+    padding-bottom: -4px;
+}
+  #sp{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('img1.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .login-box {
+    background-color:whitesmoke; 
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+  }
+
+  .login-box h2 {
+    color: #4a90e2;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .quote {
+    font-style: italic;
+    color:black;
+    margin-bottom: 20px;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .login-box button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-box button:hover {
+    background-color: #357abf;
+  }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="header">
+      <div class="logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsmQFzyuhgatBCcZ95dVi2DDAKE8Q3Enb7Jw&usqp=CAU" alt="logo" width="100" height="100">
+      </div>
+      <div class="buttoncol">
+            
+                <a  href="home.html"><i class="fa fa-fw fa-home"></i> Home</a> 
+                <a href="details.html">Alumni Details</a>
+                <a href='events.html'>Events</a>
+                <a href='container.html'>Contribute</a>
+                <a href="contact.html"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+                <a href="login.html"><i class="fa fa-fw fa-user"></i> Login</a>
+            
+      </div>
+    </div>
+  </nav>
+  <br><br>
+  <div id="sp">
+  <div class="login-box">
+    <h2>Welcome Back, Alumni!</h2>
+    <div class="quote">
+      <p>"The journey of a thousand memories begins with a single login." - Alumni Motto</p>
+    </div>
+    <form name="form" method="post" onsubmit="return validate()">
+      <input type="text" placeholder="Register Number" id="username" required>
+      <input type="password" placeholder="Password" id="password" required>
+      <button type="submit">Login</button><br>
+
+      <a href="forgot.html">Forget Password</a>
+                    <p>Don't have an account?<a href="registration.html">RegisterNow</a></p>
+    </form>
+  </div>
+</div>
+</body>
+</html>

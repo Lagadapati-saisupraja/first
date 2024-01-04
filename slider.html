@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Your existing styles and other head content -->
+    <style>
+        .header {
+            background-color: #0bc2ef;
+            padding: 5px;
+            padding-bottom: -30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: -45px;
+            height: 90px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo img {
+            margin-left: 20px;
+            height: 80px;
+            width: 80px;
+        }
+
+        nav {
+            color: white;
+            text-align: right;
+            padding: 15px;
+        }
+
+        nav a {
+            padding: 15px;
+            margin-top: 10 px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+        }
+
+        nav input {
+            margin-top: 20px;
+            text-size-adjust: inherit;
+
+        }
+
+        .buttoncol input {
+            background-color: darkgray;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin-right: 10px;
+        }
+
+        .buttoncol nav {
+            padding-top: 40px;
+        }
+
+        .buttoncol input {
+            margin-top: 35px;
+
+            padding-bottom: -4px;
+        }
+
+        #su {
+            background-image: url("image1.jpg");
+        }
+
+        td {
+            border: 2px solid black;
+            text-align: left;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #000000;
+            color: white;
+            padding: 10px;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .fa:hover {
+            opacity: 0.7;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body id="su" ng-controller="myController">
+    <nav>
+        <div class="header">
+            <div class="logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsmQFzyuhgatBCcZ95dVi2DDAKE8Q3Enb7Jw&usqp=CAU"
+                    alt="logo" width="100" height="100">
+            </div>
+            <div class="buttoncol">
+
+                <a href="home.html"><i class="fa fa-fw fa-home"></i> Home</a>
+                <a href="details.html">Alumni Details</a>
+                <a href="events.html">Events</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="container.html">Contribute</a>
+                <a href="contact.html"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+                <a href="login.html"><i class="fa fa-fw fa-user"></i> Login</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <center>
+        <h1 style="color:red;margin-top: 40px;">COORDINATOR DETAILS</h1>
+    </center>
+
+    <center>
+        <!-- AngularJS will handle the table data -->
+        <table border="2" solid black style="width: 95%; background-color: white; margin-top: 50px;">
+            <tr>
+                <th>S.No</th>
+                <th>Profession</th>
+                <th>Coordinator</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="coordinator in coordinators">
+                <td>{{ coordinator.SNo }}</td>
+                <td>{{ coordinator.Profession }}</td>
+                <td>{{ coordinator.Coordinator }}</td>
+                <td>{{ coordinator.Email }}</td>
+                <td>
+                    <button ng-click="togglePhoneNumber(coordinator)">Toggle Phone</button>
+                    <span ng-if="coordinator.showPhoneNumber">{{ coordinator.Phone }}</span>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <!-- Your existing footer and other body content -->
+
+    <!-- Include AngularJS module and controller -->
+    <script>
+        angular.module('myApp', [])
+            .controller('myController', function ($scope, $http) {
+                // Sample data for coordinators
+                $scope.coordinators = [
+                    { SNo: 1, Profession: 'Director of Alumni Relations', Coordinator: 'Yvette Alvarado', Email: 'lalvarado@law.utexas.edu', Phone: '512-232-1566', showPhoneNumber: false },
+                    // Add more coordinators as needed
+                ];
+
+                // Function to toggle showing/hiding phone number
+                $scope.togglePhoneNumber = function (coordinator) {
+                    coordinator.showPhoneNumber = !coordinator.showPhoneNumber;
+
+                    // Assuming you have the username available in $scope.username
+                    // Modify this accordingly based on your login mechanism
+                    var username = $scope.username;
+
+                    // Send POST request to the server-side script to store data and notify
+                    $http.post('store_contact.php', { username: username, coordinatorName: coordinator.Coordinator })
+                        .then(function (response) {
+                            console.log(response.data);
+                            if (response.data.success) {
+                                alert('Notification sent to ' + coordinator.Coordinator);
+                            } else {
+                                alert('Failed to send notification');
+                            }
+                        }, function (error) {
+                            console.error(error);
+                            alert('Failed to send notification');
+                        });
+                };
+            });
+    </script>
+</body>
+
+</html>

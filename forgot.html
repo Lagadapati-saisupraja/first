@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Validation</title>
+<style>
+  body {
+    margin: 0;
+    padding: 10;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('img33.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .password-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+
+  #username,
+  #password {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #password-strength {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="password-container">
+    <h2>Change Password</h2>
+    <form onsubmit="return validateForm()">
+      <input type="text" id="username" placeholder="Enter your username (Registration Number)" required>
+      <input type="password" id="password" placeholder="Enter your password " required>
+      <div id="password-strength"></div>
+      <button type="submit">Update</button>
+    </form>
+  </div>
+  <script>
+    function validateUsername(username) {
+      if (username === "") {
+        alert("Please enter your username");
+        return false;
+      }
+
+      if (!/^[0-9]/.test(username)) {
+        alert("Username must start with a digit");
+        return false;
+      }
+
+      if (username.length < 10) {
+        alert("Username must contain at least 10 digits");
+        return false;
+      }
+
+      return true;
+    }
+
+    function validatePassword(password) {
+      const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+      if (regex.test(password)) {
+        return "Strong";
+      } else {
+        return "Weak";
+      }
+    }
+
+    function updatePasswordStrengthIndicator(strength) {
+      const passwordStrength = document.getElementById('password-strength');
+      passwordStrength.textContent = `Password Strength: ${strength}`;
+    }
+
+    function showPasswordRules() {
+      const rules = [
+        "Password must be at least 6 characters long.",
+        "Password must contain at least one uppercase letter.",
+        "Password must contain at least one digit.",
+        "Password must contain at least one special character (@, $, !, %, *, ?, &)."
+      ];
+
+      alert("Password requirements:\n\n" + rules.join("\n"));
+    }
+
+    function validateForm() {
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+
+      if (!validateUsername(username)) {
+        return false;
+      }
+
+      const passwordStrength = validatePassword(password);
+      updatePasswordStrengthIndicator(passwordStrength);
+
+      if (passwordStrength === "Weak") {
+        showPasswordRules();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</body>
+</html>

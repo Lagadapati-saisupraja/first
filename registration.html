@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration</title>
+<script>
+  function generateCaptcha() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let captcha = '';
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      captcha += chars.charAt(randomIndex);
+    }
+    return captcha;
+  }
+
+  function updatePasswordStrength(password) {
+    const strengthIndicator = document.getElementById('password-strength');
+    const strength = calculatePasswordStrength(password);
+    strengthIndicator.textContent = `Password Strength: ${strength}`;
+  }
+
+  function calculatePasswordStrength(password) {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (regex.test(password)) {
+      return "Strong";
+    } else {
+      return "Weak";
+    }
+  }
+
+  function validate() {
+    const username = document.form.username.value;
+    const password = document.form.password.value;
+    const captchaInput = document.form.captcha_input.value;
+    const generatedCaptcha = document.getElementById('captcha-display').textContent;
+
+    if (username === "") {
+      alert("Please enter your username");
+      return false;
+    }
+
+    if (!/^[0-9]/.test(username)) {
+      alert("Username must start with a digit");
+      return false;
+    }
+
+    if (username.length < 10) {
+      alert("Username must contain at least 10 digits");
+      return false;
+    }
+
+    if (password === "") {
+      alert("Please enter your password");
+      return false;
+    }
+
+    if ((password.length < 5) || (password.length > 15)) {
+      alert("Password must be 5 to 15 characters only");
+      return false;
+    }
+
+    if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) {
+      alert("Incorrect Password!!");
+      return false;
+    }
+
+    if (/[;.:]/.test(password)) {
+      alert("Password cannot contain the symbols ; . :");
+      return false;
+    }
+
+    if (captchaInput !== generatedCaptcha) {
+      alert("CAPTCHA code is incorrect");
+      return false;
+    }
+
+    return true; // Allow form submission if all checks pass
+  }
+</script>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('img32.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .login-box {
+    background-color: whitesmoke;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+  }
+
+  .login-box h2 {
+    color: #4a90e2;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .quote {
+    font-style: italic;
+    color: black;
+    margin-bottom: 20px;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .login-box button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-box button:hover {
+    background-color: #357abf;
+  }
+  .avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+</style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Registration</h2>
+    <form name="form" method="post" onsubmit="return validate()">
+      <img src="avatar.jpg" alt="Avatar" class="avatar">
+      <input type="text" name="username" placeholder="Register Number" required>
+      <input type="password" name="password" placeholder="Password" oninput="updatePasswordStrength(this.value)" required>
+      <div id="password-strength"></div>
+      <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+      <input type="text" name="captcha_input" placeholder="Enter the CAPTCHA code" required>
+      <div id="captcha-display"></div>
+      <button type="submit">Register</button><br>
+    </form>
+  </div>
+  <script>
+    const captchaDisplay = document.getElementById('captcha-display');
+    captchaDisplay.textContent = generateCaptcha();
+  </script>
+</body>
+</html>

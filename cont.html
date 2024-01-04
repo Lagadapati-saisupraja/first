@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Contact Details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <div ng-repeat="contact in contacts">
+        <p>Contact Name: {{contact.name}}</p>
+        <button ng-click="showDetails(contact)">Show Details</button>
+        <div ng-show="contact.show">
+            <p>Contact Number: {{contact.number}}</p>
+            <p>Contact Email: {{contact.email}}</p>
+        </div>
+        <hr>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.contacts = [
+                { name: 'John Doe', number: '123-456-7890', email: 'john@example.com', show: false },
+                { name: 'Jane Doe', number: '987-654-3210', email: 'jane@example.com', show: false },
+                // Add more contacts as needed
+            ];
+
+            $scope.showDetails = function (contact) {
+                contact.show = !contact.show;
+            };
+        });
+    </script>
+
+</body>
+</html>
